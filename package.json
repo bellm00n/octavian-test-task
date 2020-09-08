@@ -1,0 +1,11 @@
+{
+  "name": "octavian-test-task",
+  "version": "1.0.0",
+  "description": "Test task for octavian gaming",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "bellm00n",
+  "license": "ISC"
+}
