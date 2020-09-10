@@ -1,7 +1,7 @@
 # Octavian-test-task
 This test task for octavian game art.
 
-##Install
+#Install
 ```
 npm install
 ```
