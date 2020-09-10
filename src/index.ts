@@ -1,1 +1,6 @@
-console.log('It is working');
+import Loader from './components/Loader';
+
+window.onload = () => {
+  const game = new Loader();
+  game.start();
+};
