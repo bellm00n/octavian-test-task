@@ -1,6 +1,8 @@
 import * as PIXI from 'pixi.js';
+import Tween from './Tween';
 import Reel from './Reel';
 import { textStyle, stage, reelSettings } from '../settings';
+import { backout } from '../utils';
 
 export default class Game extends PIXI.Container {
   public static readonly defaultTextStyle: PIXI.TextStyle = new PIXI.TextStyle(
@@ -20,7 +22,11 @@ export default class Game extends PIXI.Container {
 
     this.reelContainer = this.getReels();
 
-    this.addChild(this.reelContainer, this.getTopPanel(), this.getBottomPanel());
+    this.addChild(
+      this.reelContainer,
+      this.getTopPanel(),
+      this.getBottomPanel(),
+    );
   }
 
   private getReels = (): PIXI.Container => {
@@ -52,11 +58,18 @@ export default class Game extends PIXI.Container {
   private getBottomPanel = (): PIXI.Graphics => {
     const coverBottom = new PIXI.Graphics();
     coverBottom.beginFill(0, 1);
-    coverBottom.drawRect(0, reelSettings.symbolSize * 3 + this.margin, stage.width, this.margin);
+    coverBottom.drawRect(
+      0,
+      reelSettings.symbolSize * 3 + this.margin,
+      stage.width,
+      this.margin,
+    );
 
     const textBottom = new PIXI.Text('START', Game.defaultTextStyle);
     textBottom.x = Math.round((coverBottom.width - textBottom.width) / 2);
-    textBottom.y = stage.height - this.margin + Math.round((this.margin - textBottom.height) / 2);
+    textBottom.y = stage.height
+      - this.margin
+      + Math.round((this.margin - textBottom.height) / 2);
 
     coverBottom.interactive = true;
     coverBottom.buttonMode = true;
@@ -68,7 +81,36 @@ export default class Game extends PIXI.Container {
   };
 
   public startPlay(): void {
-    console.log('startPlay');
+    if (this.reelsRunning) {
+      return;
+    }
+
+    this.reelsRunning = true;
+
+    const reels = this.reelContainer.children;
+    reels.map((item, index) => {
+      const reel = item as Reel;
+
+      const extra = Math.floor(Math.random() * 3);
+      const target = reel.index + 10 + index * 5 + extra;
+      const time = 2500 + index * 600 + extra * 600;
+
+      const tween = new Tween(
+        reel,
+        'index',
+        target,
+        time,
+        backout(0.5),
+        null,
+        index === reels.length - 1
+          ? () => {
+            this.reelsRunning = false;
+          }
+          : null,
+      );
+      Tween.tweening.push(tween);
+      return null;
+    });
   }
 
   public update(): void {
@@ -78,5 +120,7 @@ export default class Game extends PIXI.Container {
       reel.update();
       return null;
     });
+
+    Tween.update();
   }
 }
