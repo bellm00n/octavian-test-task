@@ -2,22 +2,29 @@
   "name": "octavian-test-task",
   "version": "1.0.0",
   "description": "Test task for octavian game art",
+  "author": "bellm00n",
   "main": "public/index.html",
   "scripts": {
     "start": "parcel public/index.html --open",
-    "build": "parcel build build/index.html",
-    "eslint": "--ext .js,.jsx,.ts,.tsx ./"
+    "build": "parcel build build/index.html"
   },
-  "author": "bellm00n",
+  "staticFiles": {
+    "staticPath": "public/assets",
+    "watcherGlob": "**"
+  },
   "dependencies": {
+    "config": "^3.3.1",
     "pixi.js": "^5.3.3"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.1.0",
+    "@typescript-eslint/parser": "^4.1.0",
     "eslint": "^7.8.1",
+    "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-airbnb-typescript": "^10.0.0",
     "eslint-plugin-import": "^2.22.0",
     "parcel-bundler": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.5.0",
     "typescript": "^4.0.2"
   }
 }
