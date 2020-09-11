@@ -12,7 +12,8 @@ interface TextStyle {
 interface ReelSettings {
   readonly totalCount: number,
   readonly width: number,
-  readonly symbolSize: number
+  readonly symbolSize: number,
+  readonly blurMultiplier: number
 }
 
 export const stage: Stage = {
@@ -40,5 +41,6 @@ export const textStyle: TextStyle = {
 export const reelSettings: ReelSettings = {
   totalCount: 5,
   width: 160,
-  symbolSize: 150,
+  symbolSize: 160,
+  blurMultiplier: 8,
 };

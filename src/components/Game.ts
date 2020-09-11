@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import Reel from './Reel';
 import { textStyle, stage, reelSettings } from '../settings';
 
 export default class Game extends PIXI.Container {
@@ -17,7 +18,9 @@ export default class Game extends PIXI.Container {
 
     this.margin = (stage.height - reelSettings.symbolSize * 3) / 2;
 
-    this.addChild(this.getReels(), this.getTopPanel(), this.getBottomPanel());
+    this.reelContainer = this.getReels();
+
+    this.addChild(this.reelContainer, this.getTopPanel(), this.getBottomPanel());
   }
 
   private getReels = (): PIXI.Container => {
@@ -25,7 +28,9 @@ export default class Game extends PIXI.Container {
     reelContainer.y = this.margin;
     reelContainer.x = Math.round(stage.width - reelSettings.width * 5);
 
-    // adding reels
+    for (let i = 0; i < reelSettings.totalCount; i += 1) {
+      reelContainer.addChild(new Reel(i));
+    }
 
     return reelContainer;
   };
@@ -62,11 +67,16 @@ export default class Game extends PIXI.Container {
     return coverBottom;
   };
 
-  public update(): void {
-
-  }
-
   public startPlay(): void {
     console.log('startPlay');
+  }
+
+  public update(): void {
+    const reels = this.reelContainer.children;
+    reels.map((item) => {
+      const reel = item as Reel;
+      reel.update();
+      return null;
+    });
   }
 }
