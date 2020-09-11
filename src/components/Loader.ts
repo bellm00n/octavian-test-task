@@ -1,6 +1,6 @@
-import * as PIXI from 'pixi.js';
-import config from '../config/index';
-import Game from './Game';
+import * as PIXI from "pixi.js";
+import Game from "./Game";
+import { stage, resources } from "../settings";
 
 class Loader {
   private app: PIXI.Application;
@@ -10,13 +10,10 @@ class Loader {
   private onReady: () => void = () => {};
 
   constructor() {
-    const { stage, resources } = config;
-
     this.app = new PIXI.Application(stage);
-
     document.body.appendChild(this.app.view);
 
-    resources.map((resource) => this.app.loader.add(resource));
+    resources.map((resource: string) => this.app.loader.add(resource));
 
     this.app.loader.load(() => {
       this.game = new Game();
@@ -27,8 +24,9 @@ class Loader {
   public start(): void {
     if (!this.game) {
       this.onReady = () => this.start();
+      return;
     }
-    
+
     this.app.stage.addChild(this.game);
     this.app.ticker.add(() => {
       this.game.update();

@@ -1,35 +1,29 @@
 import * as PIXI from 'pixi.js';
-import config from '../config/index';
-
-const { textStyles, reel, stage } = config;
+import { textStyle, stage, reelSettings } from '../settings';
 
 export default class Game extends PIXI.Container {
   public static readonly defaultTextStyle: PIXI.TextStyle = new PIXI.TextStyle(
-    textStyles.topText,
+    textStyle,
   );
 
   private reelContainer!: PIXI.Container;
 
   private reelsRunning: boolean = false;
 
-  private margin: number;
+  private readonly margin: number = 0;
 
   constructor() {
     super();
 
-    this.margin = (stage.height - reel.symbolSize * 3) / 2;
+    this.margin = (stage.height - reelSettings.symbolSize * 3) / 2;
 
-    this.addChild(
-      this.getReels(),
-      this.getTopPanel(),
-      this.getBottomPanel(),
-    );
+    this.addChild(this.getReels(), this.getTopPanel(), this.getBottomPanel());
   }
 
   private getReels = (): PIXI.Container => {
     const reelContainer = new PIXI.Container();
     reelContainer.y = this.margin;
-    reelContainer.x = Math.round(stage.width - reel.width * 5);
+    reelContainer.x = Math.round(stage.width - reelSettings.width * 5);
 
     // adding reels
 
@@ -53,7 +47,7 @@ export default class Game extends PIXI.Container {
   private getBottomPanel = (): PIXI.Graphics => {
     const coverBottom = new PIXI.Graphics();
     coverBottom.beginFill(0, 1);
-    coverBottom.drawRect(0, reel.symbolSize * 3 + this.margin, stage.width, this.margin);
+    coverBottom.drawRect(0, reelSettings.symbolSize * 3 + this.margin, stage.width, this.margin);
 
     const textBottom = new PIXI.Text('START', Game.defaultTextStyle);
     textBottom.x = Math.round((coverBottom.width - textBottom.width) / 2);
