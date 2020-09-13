@@ -27,4 +27,5 @@ export const reelSettings: ReelSettings = {
   width: 160,
   symbolSize: 160,
   blurMultiplier: 8,
+  margin: 80,
 };

@@ -13,5 +13,6 @@ export interface ReelSettings {
     readonly totalCount: number,
     readonly width: number,
     readonly symbolSize: number,
-    readonly blurMultiplier: number
+    readonly blurMultiplier: number,
+    readonly margin: number,
 }

@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import {stage} from "../settings";
+import { stage } from '../settings';
 
 export default class PixiFps extends PIXI.Container {
     private static readonly DEFAULT_FONT_SIZE: number = 26;

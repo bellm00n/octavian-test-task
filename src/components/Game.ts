@@ -19,12 +19,8 @@ export default class Game extends PIXI.Container {
 
   private reelsRunning: boolean = false;
 
-  private readonly margin: number = 0;
-
   constructor() {
     super();
-
-    this.margin = (stage.height - reelSettings.symbolSize * 3) / 2;
 
     this.reelContainer = this.getReels();
 
@@ -40,7 +36,7 @@ export default class Game extends PIXI.Container {
 
   private getReels = (): PIXI.Container => {
     const reelContainer = new PIXI.Container();
-    reelContainer.y = this.margin;
+    reelContainer.y = reelSettings.margin;
     reelContainer.x = Math.round(stage.width - reelSettings.width * 5);
 
     for (let i = 0; i < reelSettings.totalCount; i += 1) {
@@ -51,11 +47,11 @@ export default class Game extends PIXI.Container {
   };
 
   private getTopPanel = (): PIXI.Graphics => {
-    const coverTop = new Rectangle({ width: stage.width, height: this.margin });
+    const coverTop = new Rectangle({ width: stage.width, height: reelSettings.margin });
 
     const textTop = new PIXI.Text('Octavian test task', Game.defaultTextStyle);
     textTop.x = Math.round((coverTop.width - textTop.width) / 2);
-    textTop.y = Math.round((this.margin - textTop.height) / 2);
+    textTop.y = Math.round((reelSettings.margin - textTop.height) / 2);
 
     coverTop.addChild(textTop);
 
@@ -64,9 +60,9 @@ export default class Game extends PIXI.Container {
 
   private getBottomPanel = (): PIXI.Graphics => {
     const coverBottom = new Rectangle({
-      y: reelSettings.symbolSize * 3 + this.margin,
+      y: reelSettings.symbolSize * 3 + reelSettings.margin,
       width: stage.width,
-      height: this.margin,
+      height: reelSettings.margin,
       interactive: true,
       buttonMode: true,
       clickHandler: this.startPlay,
@@ -75,8 +71,8 @@ export default class Game extends PIXI.Container {
     this.textBottom = new PIXI.Text('START', Game.defaultTextStyle);
     this.textBottom.x = Math.round((coverBottom.width - this.textBottom.width) / 2);
     this.textBottom.y = stage.height
-      - this.margin
-      + Math.round((this.margin - this.textBottom.height) / 2);
+      - reelSettings.margin
+      + Math.round((reelSettings.margin - this.textBottom.height) / 2);
 
     coverBottom.addChild(this.textBottom);
 
