@@ -4,6 +4,7 @@ import Reel from './Reel';
 import FpsCounter from './FpsCounter';
 import { textStyle, stage, reelSettings } from '../settings';
 import { backout } from '../utils';
+import Rectangle from './commonElements/Rectangle';
 
 export default class Game extends PIXI.Container {
   public static readonly defaultTextStyle: PIXI.TextStyle = new PIXI.TextStyle(
@@ -50,9 +51,7 @@ export default class Game extends PIXI.Container {
   };
 
   private getTopPanel = (): PIXI.Graphics => {
-    const coverTop = new PIXI.Graphics();
-    coverTop.beginFill(0, 1);
-    coverTop.drawRect(0, 0, stage.width, this.margin);
+    const coverTop = new Rectangle({ width: stage.width, height: this.margin });
 
     const textTop = new PIXI.Text('Octavian test task', Game.defaultTextStyle);
     textTop.x = Math.round((coverTop.width - textTop.width) / 2);
@@ -64,14 +63,14 @@ export default class Game extends PIXI.Container {
   };
 
   private getBottomPanel = (): PIXI.Graphics => {
-    const coverBottom = new PIXI.Graphics();
-    coverBottom.beginFill(0, 1);
-    coverBottom.drawRect(
-      0,
-      reelSettings.symbolSize * 3 + this.margin,
-      stage.width,
-      this.margin,
-    );
+    const coverBottom = new Rectangle({
+      y: reelSettings.symbolSize * 3 + this.margin,
+      width: stage.width,
+      height: this.margin,
+      interactive: true,
+      buttonMode: true,
+      clickHandler: this.startPlay,
+    });
 
     this.textBottom = new PIXI.Text('START', Game.defaultTextStyle);
     this.textBottom.x = Math.round((coverBottom.width - this.textBottom.width) / 2);
@@ -79,17 +78,12 @@ export default class Game extends PIXI.Container {
       - this.margin
       + Math.round((this.margin - this.textBottom.height) / 2);
 
-    coverBottom.interactive = true;
-    coverBottom.buttonMode = true;
-    coverBottom.addListener('pointerdown', () => this.startPlay());
-
     coverBottom.addChild(this.textBottom);
 
     return coverBottom;
   };
 
   private changeBottomTextAlpha = (): void => {
-
     if (this.textBottomAnimationPhase === 1) {
       this.textBottom.alpha -= 0.015;
     } else {
@@ -100,12 +94,12 @@ export default class Game extends PIXI.Container {
       this.textBottomAnimationPhase = 2;
     }
 
-    if (this.textBottom.alpha >= 1){
+    if (this.textBottom.alpha >= 1) {
       this.textBottomAnimationPhase = 1;
     }
-  }
+  };
 
-  public startPlay(): void {
+  public startPlay = (): void => {
     if (this.reelsRunning) {
       return;
     }
@@ -136,7 +130,7 @@ export default class Game extends PIXI.Container {
       Tween.tweening.push(tween);
       return null;
     });
-  }
+  };
 
   public update(): void {
     this.changeBottomTextAlpha();
