@@ -18,7 +18,7 @@ class SpinButton extends PIXI.Container {
   private setContainerParams = (): void => {
     this.interactive = true;
     this.buttonMode = true;
-    this.addListener('pointerdown', () => spinStartEvent.broadcast({}));
+    this.addListener('pointerdown', () => spinStartEvent.broadcast());
 
     this.x = Math.round((stage.width - this.width) / 2);
     this.y = stage.height

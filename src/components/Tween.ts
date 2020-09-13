@@ -1,4 +1,5 @@
 import { lerp } from '../utils/easingFunctions';
+import { spinStopEvent } from '../events';
 
 export default class Tween {
   public static tweening: Tween[] = [];
@@ -13,8 +14,7 @@ export default class Tween {
     public target: number,
     public time: number,
     public easing: (t: number) => number,
-    public change: (tween: Tween) => void | null,
-    public complete: (tween: Tween) => void | null,
+    public complete: boolean,
   ) {
     this.propertyBeginValue = object[property];
   }
@@ -31,13 +31,11 @@ export default class Tween {
         tween.target,
         tween.easing(phase),
       );
-      if (tween.change) {
-        tween.change(tween);
-      }
+
       if (phase === 1) {
         tween.object[tween.property] = tween.target;
         if (tween.complete) {
-          tween.complete(tween);
+          spinStopEvent.broadcast();
         }
         remove.push(tween);
       }

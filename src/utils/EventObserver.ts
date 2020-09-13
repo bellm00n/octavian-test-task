@@ -11,7 +11,7 @@ export default class EventObserver {
       this.observers = this.observers.filter((subscriber : observerType) => subscriber !== fn);
     }
 
-    broadcast(data: object) {
+    broadcast(data: object = {}) {
       this.observers.forEach((subscriber: observerType) => subscriber(data));
     }
 }

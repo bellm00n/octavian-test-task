@@ -2,9 +2,9 @@ import * as PIXI from 'pixi.js';
 import Tween from './Tween';
 import Reel from './Reel';
 import { backout } from '../utils/easingFunctions';
-import { tickEvent, spinStartEvent } from '../events';
+import { tickEvent, spinStartEvent, spinStopEvent } from '../events';
 import { TopPanel, BottomPanel, FpsCounter } from './UI';
-import ReelsContainer from "./ReelsContainer"
+import ReelsContainer from './ReelsContainer';
 
 export default class Game extends PIXI.Container {
   private readonly reelContainer!: PIXI.Container;
@@ -33,6 +33,7 @@ export default class Game extends PIXI.Container {
   private addListeners = (): void => {
     tickEvent.subscribe(this.update);
     spinStartEvent.subscribe(this.startPlay);
+    spinStopEvent.subscribe(this.stopSpin);
   }
 
   private startPlay = (): void => {
@@ -56,16 +57,15 @@ export default class Game extends PIXI.Container {
         target,
         time,
         backout(0.5),
-        null,
-        index === reels.length - 1
-          ? () => {
-            this.reelsRunning = false;
-          }
-          : null,
+        index === reels.length - 1,
       );
       Tween.tweening.push(tween);
     });
   };
+
+  stopSpin = ():void => {
+    this.reelsRunning = false;
+  }
 
   public update = (): void => {
     const reels = this.reelContainer.children;
