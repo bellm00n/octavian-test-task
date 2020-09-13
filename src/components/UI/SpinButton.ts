@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { tickEvent, spinStartEvent } from '../../events';
-import { textStyle, stage, reelSettings } from '../../settings';
+import { defaultTextStyle, stage, reelSettings } from '../../settings';
 
 class SpinButton extends PIXI.Container {
   private textBottom!: PIXI.Text;
@@ -10,7 +10,7 @@ class SpinButton extends PIXI.Container {
   constructor() {
     super();
 
-    this.draw();
+    this.setButtonText();
     this.setContainerParams();
     tickEvent.subscribe(this.animateSpinButton);
   }
@@ -26,8 +26,8 @@ class SpinButton extends PIXI.Container {
         + Math.round((reelSettings.margin - this.textBottom.height) / 2);
   };
 
-  private draw = (): void => {
-    const style = new PIXI.TextStyle(textStyle);
+  private setButtonText = (): void => {
+    const style = new PIXI.TextStyle(defaultTextStyle);
     this.textBottom = new PIXI.Text('START', style);
     this.addChild(this.textBottom);
   };

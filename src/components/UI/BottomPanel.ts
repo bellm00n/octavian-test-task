@@ -7,21 +7,17 @@ class BottomPanel extends PIXI.Container {
   constructor() {
     super();
 
-    this.draw();
+    const coverBottom = new Rectangle({
+      y: reelSettings.symbolSize * 3 + reelSettings.margin,
+      width: stage.width,
+      height: reelSettings.margin,
+    });
+
+    const spinButton = new SpinButton();
+
+    coverBottom.addChild(spinButton);
+    this.addChild(coverBottom);
   }
-
-    private draw = ():void => {
-      const coverBottom = new Rectangle({
-        y: reelSettings.symbolSize * 3 + reelSettings.margin,
-        width: stage.width,
-        height: reelSettings.margin,
-      });
-
-      const spinButton = new SpinButton();
-
-      coverBottom.addChild(spinButton);
-      this.addChild(coverBottom);
-    }
 }
 
 export default BottomPanel;

@@ -55,14 +55,14 @@ export default class Reel extends PIXI.Container {
     this.blur.blurY = (this.index - this.previousIndex) * reelSettings.blurMultiplier;
     this.previousIndex = this.index;
 
-    this.children.forEach((item, index): null => {
+    this.children.forEach((item, index): void => {
       const symbol = item as PIXI.Sprite;
 
       symbol.y = ((this.index + index) % this.children.length)
           * reelSettings.symbolSize
         - reelSettings.symbolSize;
 
-      if (symbol.y <= reelSettings.symbolSize || symbol.y >= 0) return null;
+      if (symbol.y <= reelSettings.symbolSize || symbol.y >= 0) return;
 
       Reel.setSymbolParams(symbol);
     });

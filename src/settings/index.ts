@@ -14,7 +14,15 @@ export const resources: readonly string[] = [
   '/symbol_4.png',
 ];
 
-export const textStyle: TextStyle = {
+export const reelSettings: ReelSettings = {
+  totalCount: 5,
+  width: 160,
+  symbolSize: 160,
+  blurMultiplier: 8,
+  margin: 80,
+};
+
+export const defaultTextStyle: TextStyle = {
   fontFamily: 'Arial',
   fontSize: 36,
   fontStyle: 'italic',
@@ -22,10 +30,7 @@ export const textStyle: TextStyle = {
   fill: '#ffffff',
 };
 
-export const reelSettings: ReelSettings = {
-  totalCount: 5,
-  width: 160,
-  symbolSize: 160,
-  blurMultiplier: 8,
-  margin: 80,
+export const fpsTextStyle: TextStyle = {
+  fontSize: 26,
+  fill: 0xff0000,
 };
