@@ -13,12 +13,3 @@ npm install
 npm start
 ```
 
-## Build project
-```
-npm run build
-```
-
-## Run tslint
-```
-npm run tslint
-```
