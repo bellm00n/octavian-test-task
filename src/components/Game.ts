@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Tween from './Tween';
 import Reel from './Reel';
+import FpsCounter from './FpsCounter';
 import { textStyle, stage, reelSettings } from '../settings';
 import { backout } from '../utils';
 
@@ -9,7 +10,11 @@ export default class Game extends PIXI.Container {
     textStyle,
   );
 
-  private reelContainer!: PIXI.Container;
+  private readonly reelContainer!: PIXI.Container;
+
+  private textBottom!: PIXI.Text;
+
+  private textBottomAnimationPhase: 1 | 2 = 1;
 
   private reelsRunning: boolean = false;
 
@@ -22,10 +27,13 @@ export default class Game extends PIXI.Container {
 
     this.reelContainer = this.getReels();
 
+    const fpsCounter = new FpsCounter();
+
     this.addChild(
       this.reelContainer,
       this.getTopPanel(),
       this.getBottomPanel(),
+      fpsCounter,
     );
   }
 
@@ -65,20 +73,37 @@ export default class Game extends PIXI.Container {
       this.margin,
     );
 
-    const textBottom = new PIXI.Text('START', Game.defaultTextStyle);
-    textBottom.x = Math.round((coverBottom.width - textBottom.width) / 2);
-    textBottom.y = stage.height
+    this.textBottom = new PIXI.Text('START', Game.defaultTextStyle);
+    this.textBottom.x = Math.round((coverBottom.width - this.textBottom.width) / 2);
+    this.textBottom.y = stage.height
       - this.margin
-      + Math.round((this.margin - textBottom.height) / 2);
+      + Math.round((this.margin - this.textBottom.height) / 2);
 
     coverBottom.interactive = true;
     coverBottom.buttonMode = true;
     coverBottom.addListener('pointerdown', () => this.startPlay());
 
-    coverBottom.addChild(textBottom);
+    coverBottom.addChild(this.textBottom);
 
     return coverBottom;
   };
+
+  private changeBottomTextAlpha = (): void => {
+
+    if (this.textBottomAnimationPhase === 1) {
+      this.textBottom.alpha -= 0.015;
+    } else {
+      this.textBottom.alpha += 0.015;
+    }
+
+    if (this.textBottom.alpha < 0.5) {
+      this.textBottomAnimationPhase = 2;
+    }
+
+    if (this.textBottom.alpha >= 1){
+      this.textBottomAnimationPhase = 1;
+    }
+  }
 
   public startPlay(): void {
     if (this.reelsRunning) {
@@ -114,6 +139,7 @@ export default class Game extends PIXI.Container {
   }
 
   public update(): void {
+    this.changeBottomTextAlpha();
     const reels = this.reelContainer.children;
     reels.map((item) => {
       const reel = item as Reel;
