@@ -9,7 +9,7 @@
     "build": "parcel build build/index.html"
   },
   "staticFiles": {
-    "staticPath": "public/assets",
+    "staticPath": "public/images",
     "watcherGlob": "**"
   },
   "dependencies": {
