@@ -23,7 +23,7 @@ export default class Tween {
     const now = Date.now();
     const remove: Tween[] = [];
 
-    Tween.tweening.map((tween: Tween): null => {
+    Tween.tweening.forEach((tween: Tween): null => {
       const phase = Math.min(1, (now - tween.start) / tween.time);
 
       tween.object[tween.property] = lerp(
@@ -45,7 +45,7 @@ export default class Tween {
       return null;
     });
 
-    remove.map((_, index: number) => {
+    remove.forEach((_, index: number) => {
       Tween.tweening.splice(Tween.tweening.indexOf(remove[index]), 1);
     });
   }

@@ -13,7 +13,7 @@ class Loader {
     this.app = new PIXI.Application(stage);
     document.body.appendChild(this.app.view);
 
-    resources.map((resource: string) => this.app.loader.add(resource));
+    resources.forEach((resource: string) => this.app.loader.add(resource));
 
     this.app.loader.load(() => {
       this.game = new Game();

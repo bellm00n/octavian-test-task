@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Tween from './Tween';
 import Reel from './Reel';
-import FpsCounter from './FpsCounter';
+import FpsCounter from './UI/FpsCounter';
 import { textStyle, stage, reelSettings } from '../settings';
 import { backout } from '../utils/easingFunctions';
 import Rectangle from './commonElements/Rectangle';
@@ -103,7 +103,7 @@ export default class Game extends PIXI.Container {
     this.reelsRunning = true;
 
     const reels = this.reelContainer.children;
-    reels.map((item, index) => {
+    reels.forEach((item, index) => {
       const reel = item as Reel;
 
       const extra = Math.floor(Math.random() * 3);
@@ -124,17 +124,15 @@ export default class Game extends PIXI.Container {
           : null,
       );
       Tween.tweening.push(tween);
-      return null;
     });
   };
 
   public update(): void {
     this.changeBottomTextAlpha();
     const reels = this.reelContainer.children;
-    reels.map((item) => {
+    reels.forEach((item) => {
       const reel = item as Reel;
       reel.update();
-      return null;
     });
 
     Tween.update();

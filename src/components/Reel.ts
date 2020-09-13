@@ -4,7 +4,7 @@ import { resources, reelSettings } from '../settings';
 export default class Reel extends PIXI.Container {
   public static getRandomTexture(): PIXI.Texture {
     if (Reel.slotTextures.length === 0) {
-      resources.map((resource: string) => Reel.slotTextures.push(PIXI.Texture.from(resource)));
+      resources.forEach((resource: string) => Reel.slotTextures.push(PIXI.Texture.from(resource)));
     }
 
     const randomSymbolNumber: number = Math.floor(
@@ -44,11 +44,10 @@ export default class Reel extends PIXI.Container {
     this.blur.blurY = 0;
     this.filters = [this.blur];
 
-    resources.map(() => {
+    resources.forEach(() => {
       const symbol = new PIXI.Sprite();
       Reel.setSymbolParams(symbol);
       this.addChild(symbol);
-      return null;
     });
   }
 
@@ -56,7 +55,7 @@ export default class Reel extends PIXI.Container {
     this.blur.blurY = (this.index - this.previousIndex) * reelSettings.blurMultiplier;
     this.previousIndex = this.index;
 
-    this.children.map((item, index): null => {
+    this.children.forEach((item, index): null => {
       const symbol = item as PIXI.Sprite;
 
       symbol.y = ((this.index + index) % this.children.length)
@@ -66,7 +65,6 @@ export default class Reel extends PIXI.Container {
       if (symbol.y <= reelSettings.symbolSize || symbol.y >= 0) return null;
 
       Reel.setSymbolParams(symbol);
-      return null;
     });
   }
 }
