@@ -1,6 +1,7 @@
-import * as PIXI from "pixi.js";
-import Game from "./Game";
-import { stage, resources } from "../settings";
+import * as PIXI from 'pixi.js';
+import Game from './Game';
+import { stage, resources } from '../settings';
+import { tickEvent } from '../events';
 
 class Loader {
   private app: PIXI.Application;
@@ -29,7 +30,7 @@ class Loader {
 
     this.app.stage.addChild(this.game);
     this.app.ticker.add(() => {
-      this.game.update();
+      tickEvent.broadcast({});
     });
   }
 }
