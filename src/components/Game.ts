@@ -3,7 +3,7 @@ import Tween from './Tween';
 import Reel from './Reel';
 import FpsCounter from './FpsCounter';
 import { textStyle, stage, reelSettings } from '../settings';
-import { backout } from '../utils';
+import { backout } from '../utils/easingFunctions';
 import Rectangle from './commonElements/Rectangle';
 
 export default class Game extends PIXI.Container {

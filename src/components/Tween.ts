@@ -1,4 +1,4 @@
-import { lerp } from '../utils';
+import { lerp } from '../utils/easingFunctions';
 
 export default class Tween {
   public static tweening: Tween[] = [];
