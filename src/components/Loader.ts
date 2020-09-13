@@ -12,7 +12,9 @@ class Loader {
 
   constructor() {
     this.app = new PIXI.Application(stage);
-    document.body.appendChild(this.app.view);
+
+    const rootElement = document.getElementById('root');
+    if (rootElement) rootElement.appendChild(this.app.view);
 
     resources.forEach((resource: string) => this.app.loader.add(resource));
 
