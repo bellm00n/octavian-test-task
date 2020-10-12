@@ -12,7 +12,7 @@ class TopPanel extends PIXI.Container {
     });
 
     const style = new PIXI.TextStyle(defaultTextStyle);
-    const textTop = new PIXI.Text('Octavian test task', style);
+    const textTop = new PIXI.Text('Slot machine', style);
 
     textTop.x = Math.round((coverTop.width - textTop.width) / 2);
     textTop.y = Math.round((reelSettings.margin - textTop.height) / 2);

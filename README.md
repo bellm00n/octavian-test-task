@@ -1,7 +1,5 @@
-# Octavian-test-task
-This test task for octavian game art.
-
-GitHub: https://github.com/bellm00n/octavian-test-task
+# Slot-machine
+Slot machine developed with typeScript, pixi.js + es6 syntax.
 
 ## Install
 ```
